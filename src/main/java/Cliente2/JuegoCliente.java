@@ -159,6 +159,8 @@ public class JuegoCliente extends JFrame {
                 SwingConstants.CENTER
             );
             mensaje.setFont(new Font("Arial", Font.BOLD, 32));
+            mensaje.setForeground(Color.WHITE);
+            panelFinal.setBackground(Color.BLACK);
             panelFinal.add(mensaje, BorderLayout.CENTER);
             
             setContentPane(panelFinal);
