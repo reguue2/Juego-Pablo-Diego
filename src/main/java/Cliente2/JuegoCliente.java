@@ -30,7 +30,6 @@ public class JuegoCliente extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        // CREAMOS panel de juego SIN INITCOMPONENTS
         gamePanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -63,7 +62,6 @@ public class JuegoCliente extends JFrame {
 
         setContentPane(gamePanel);
 
-        // KeyListener sobre el panel correcto
         gamePanel.setFocusable(true);
         gamePanel.requestFocusInWindow();
         gamePanel.addKeyListener(new KeyAdapter() {
@@ -146,11 +144,9 @@ public class JuegoCliente extends JFrame {
     
     private void mostrarPantallaFinal() {
         SwingUtilities.invokeLater(() -> {
-            // Elimina el contenido del juego
             getContentPane().removeAll();
             repaint();
 
-            // Panel final
             JPanel panelFinal = new JPanel();
             panelFinal.setLayout(new BorderLayout());
 

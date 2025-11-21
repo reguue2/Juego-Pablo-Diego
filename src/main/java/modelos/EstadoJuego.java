@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ *
+ * @author Diurno
+ */
 public class EstadoJuego implements Serializable {
 
     public static class Bala implements Serializable {
@@ -18,7 +22,7 @@ public class EstadoJuego implements Serializable {
         }
     }
 
-    // Tamaño lógico del campo
+    // Tamaño campo
     public static final int WIDTH = 800;
     public static final int HEIGHT = 575;
 
@@ -32,7 +36,7 @@ public class EstadoJuego implements Serializable {
     public int y2 = HEIGHT / 2;
     public int vida2 = 3;
 
-    // Control de disparo (cooldown 500ms)
+    // Control de disparo
     private long ultimoDisparoJugador1 = 0;
     private long ultimoDisparoJugador2 = 0;
     private static final long COOLDOWN_DISPARO = 500;
@@ -42,7 +46,6 @@ public class EstadoJuego implements Serializable {
 
     public List<Bala> balas = new ArrayList<>();
 
-    // Movimiento
     public void moverJugadorArriba(int idJugador) {
         if (idJugador == 1) {
             y1 -= 10;
@@ -63,7 +66,6 @@ public class EstadoJuego implements Serializable {
         }
     }
 
-    // Disparo con cooldown
     public void disparar(int idJugador) {
         long ahora = System.currentTimeMillis();
 
@@ -80,14 +82,12 @@ public class EstadoJuego implements Serializable {
         }
     }
 
-    // Actualización lógica (colisiones y vida)
     public void actualizar() {
         Iterator<Bala> it = balas.iterator();
         while (it.hasNext()) {
             Bala b = it.next();
             b.x += b.vx;
 
-            // Colisión con jugadores
             if (colisionaConJugador1(b)) {
                 vida1 = Math.max(0, vida1 - 1);
                 it.remove();
@@ -109,7 +109,6 @@ public class EstadoJuego implements Serializable {
                 ganador = 1;
             }
             
-            // Fuera de pantalla
             if (b.x < 0 || b.x > WIDTH) {
                 it.remove();
             }

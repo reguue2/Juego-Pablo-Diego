@@ -20,7 +20,7 @@ public class Mensaje implements Serializable {
     }
 
     private Tipo tipo;
-    private int idJugador; // 1 o 2
+    private int idJugador;
 
     public Mensaje(Tipo tipo, int idJugador) {
         this.tipo = tipo;
