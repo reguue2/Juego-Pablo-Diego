@@ -36,6 +36,9 @@ public class EstadoJuego implements Serializable {
     private long ultimoDisparoJugador1 = 0;
     private long ultimoDisparoJugador2 = 0;
     private static final long COOLDOWN_DISPARO = 500;
+    public boolean juegoTerminado = false;
+    public int ganador = 0;
+
 
     public List<Bala> balas = new ArrayList<>();
 
@@ -96,7 +99,16 @@ public class EstadoJuego implements Serializable {
                 it.remove();
                 continue;
             }
-
+            
+            if (vida1 <= 0) {
+                juegoTerminado = true;
+                ganador = 2;
+            }
+            if (vida2 <= 0) {
+                juegoTerminado = true;
+                ganador = 1;
+            }
+            
             // Fuera de pantalla
             if (b.x < 0 || b.x > WIDTH) {
                 it.remove();

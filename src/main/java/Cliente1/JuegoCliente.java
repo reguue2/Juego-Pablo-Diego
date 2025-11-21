@@ -119,24 +119,73 @@ public class JuegoCliente extends javax.swing.JFrame {
             in = new ObjectInputStream(socket.getInputStream());
 
             new Thread(() -> {
-                try {
-                    while (true) {
-                        Object obj = in.readObject();
-                        if (obj instanceof EstadoJuego) {
-                            estado = (EstadoJuego) obj;
+            try {
+                while (true) {
+                    Object obj = in.readObject();
+                    if (obj instanceof EstadoJuego) {
+                        estado = (EstadoJuego) obj;
+
+                        if (estado.juegoTerminado) {
+                            mostrarPantallaFinal();
+                            break;
+                        } else {
                             SwingUtilities.invokeLater(gamePanel::repaint);
                         }
                     }
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(this, "Desconectado del servidor.");
                 }
-            }).start();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Desconectado del servidor.");
+            }
+        }).start();
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "No se puede conectar: " + e.getMessage());
         }
     }
+    
+    private void mostrarPantallaFinal() {
+        SwingUtilities.invokeLater(() -> {
+            // Elimina el contenido del juego
+            getContentPane().removeAll();
+            repaint();
 
+            // Panel final
+            JPanel panelFinal = new JPanel();
+            panelFinal.setLayout(new BorderLayout());
+
+            JLabel mensaje = new JLabel(
+                "Jugador " + estado.ganador + " ha ganado",
+                SwingConstants.CENTER
+            );
+            mensaje.setFont(new Font("Arial", Font.BOLD, 32));
+            panelFinal.add(mensaje, BorderLayout.CENTER);
+
+            JButton reiniciar = new JButton("Volver a jugar");
+            reiniciar.setFont(new Font("Arial", Font.PLAIN, 20));
+            reiniciar.addActionListener(e -> reiniciarPartida());
+            panelFinal.add(reiniciar, BorderLayout.SOUTH);
+
+            setContentPane(panelFinal);
+            revalidate();
+            repaint();
+        });
+    }
+    
+    private void reiniciarPartida() {
+        try {
+            // Cerrar streams y socket
+            in.close();
+            out.close();
+            dispose(); // Cierra la ventana
+
+            // Volver a abrir nueva instancia
+            new JuegoCliente().setVisible(true);
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error reiniciando la partida: " + ex.getMessage());
+        }
+    }
+    
     private void manejarTecla(KeyEvent e) {
         if (out == null) return;
 
