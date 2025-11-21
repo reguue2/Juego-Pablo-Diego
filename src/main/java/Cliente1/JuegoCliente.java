@@ -113,7 +113,7 @@ public class JuegoCliente extends javax.swing.JFrame {
     
     private void conectar() {
         try {
-            Socket socket = new Socket("10.2.8.15", 5000);
+            Socket socket = new Socket("10.2.8.16", 5000);
             out = new ObjectOutputStream(socket.getOutputStream());
             out.flush();
             in = new ObjectInputStream(socket.getInputStream());
