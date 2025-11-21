@@ -174,13 +174,16 @@ public class JuegoCliente extends JFrame {
     
     private void reiniciarPartida() {
         try {
-            // Cerrar streams y socket
-            in.close();
-            out.close();
-            dispose(); // Cierra la ventana
+            // Cierra todo lo relacionado con red
+            try { in.close(); } catch (Exception ignored) {}
+            try { out.close(); } catch (Exception ignored) {}
 
-            // Volver a abrir nueva instancia
-            new Cliente1.JuegoCliente().setVisible(true);
+            dispose(); // Cierra ventana actual
+
+            // Lanza nueva instancia del cliente
+            SwingUtilities.invokeLater(() -> {
+                new Cliente1.JuegoCliente().setVisible(true); // Se vuelve a conectar al servidor
+            });
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Error reiniciando la partida: " + ex.getMessage());
