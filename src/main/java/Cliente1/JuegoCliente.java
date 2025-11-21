@@ -160,30 +160,10 @@ public class JuegoCliente extends javax.swing.JFrame {
             mensaje.setFont(new Font("Arial", Font.BOLD, 32));
             panelFinal.add(mensaje, BorderLayout.CENTER);
 
-            JButton reiniciar = new JButton("Volver a jugar");
-            reiniciar.setFont(new Font("Arial", Font.PLAIN, 20));
-            reiniciar.addActionListener(e -> reiniciarPartida());
-            panelFinal.add(reiniciar, BorderLayout.SOUTH);
-
             setContentPane(panelFinal);
             revalidate();
             repaint();
         });
-    }
-    
-    private void reiniciarPartida() {
-        try {
-            // Cerrar streams y socket
-            in.close();
-            out.close();
-            dispose(); // Cierra la ventana
-
-            // Volver a abrir nueva instancia
-            new JuegoCliente().setVisible(true);
-
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Error reiniciando la partida: " + ex.getMessage());
-        }
     }
     
     private void manejarTecla(KeyEvent e) {

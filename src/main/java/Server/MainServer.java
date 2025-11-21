@@ -154,10 +154,6 @@ public class MainServer extends javax.swing.JFrame {
             }
         }
     }
-    
-    public synchronized void reiniciarJuego() {
-        estado = new EstadoJuego(); // Reset completo del estado
-    }
 
     public void log(String texto) {
         JTextArea area = this.txtLog;
